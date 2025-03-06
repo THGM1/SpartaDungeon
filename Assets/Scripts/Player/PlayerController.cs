@@ -16,16 +16,30 @@ public class PlayerController : MonoBehaviour
 
     [Header("카메라")]
     public Transform cameraContainer;
+    public float minXLook;
+    public float maxXLook;
+    private float camCurXRot;
+    public float lookSensitivity;
 
+    private Vector2 mouseDelta;
     private Rigidbody rb;
 
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
     }
-    private void Update()
+    private void FixedUpdate()
     {
         Move();
+    }
+    private void LateUpdate()
+    {
+        CameraLook();
+    }
+
+    public void OnLook(InputAction.CallbackContext context)
+    {
+        mouseDelta = context.ReadValue<Vector2>();
     }
     public void OnMove(InputAction.CallbackContext context)
     {
@@ -87,5 +101,14 @@ public class PlayerController : MonoBehaviour
             if (Physics.Raycast(rays[i], 0.1f, ground)) return true;
         }
         return false;
+    }
+
+    void CameraLook()
+    {
+        camCurXRot += mouseDelta.y * lookSensitivity;
+        camCurXRot = Mathf.Clamp(camCurXRot, minXLook, maxXLook);
+        cameraContainer.localEulerAngles = new Vector3(-camCurXRot ,0 , 0);
+
+        transform.eulerAngles += new Vector3(0, mouseDelta.x * lookSensitivity, 0);
     }
 }
