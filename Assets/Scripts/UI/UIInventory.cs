@@ -2,6 +2,7 @@ using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class UIInventory : MonoBehaviour
 {
@@ -60,11 +61,12 @@ public class UIInventory : MonoBehaviour
 
         if (emptySlot != null)
         {
+            bool isEmpty = !HasAnyItem();
             emptySlot.data = data;
             emptySlot.quantity = 1;
             UpdateUI();
-            SelectItem(0);
             CharacterManager.Instance.Player.itemData = null;
+            if (isEmpty) SelectItem(0);
             return;
         }
 
@@ -78,6 +80,7 @@ public class UIInventory : MonoBehaviour
 
         selectedItem = slots[index];
         selectedItemIndex = index;
+        Debug.Log($"아이템 {index}번 선택됨: {slots[index].data.displayName}");
     }
     public void UpdateUI()
     {
@@ -148,5 +151,40 @@ public class UIInventory : MonoBehaviour
         UpdateUI();
     }
 
+    public void ChangeSelectedItem(int direction)
+    {
+        selectedItemIndex += direction;
+
+        if (selectedItemIndex >= slots.Length) selectedItemIndex = 0;
+        if (selectedItemIndex < 0) selectedItemIndex = slots.Length -1;
+
+        SelectItem(selectedItemIndex);
+    }
+
+    public void OnScroll(InputAction.CallbackContext context)
+    {
+        if (hasItem)
+        {
+            if (context.phase != InputActionPhase.Performed) return;
+            float scrollValue = context.ReadValue<Vector2>().y;
+
+            if (scrollValue > 0)
+            {
+                ChangeSelectedItem(1);
+            }
+            else if (scrollValue < 0)
+            {
+                ChangeSelectedItem(-1);
+            }
+        }
+    }
+    private bool HasAnyItem()
+    {
+        foreach (var slot in slots)
+        {
+            if (slot.data != null) return true;
+        }
+        return false;
+    }
 
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 public class ItemSlot : MonoBehaviour
@@ -46,5 +47,9 @@ public class ItemSlot : MonoBehaviour
         icon.gameObject.SetActive(false);
         quantityText.text = string.Empty;
     }
+
+
+
+
 
 }
