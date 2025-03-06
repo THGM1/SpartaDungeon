@@ -63,6 +63,7 @@ public class UIInventory : MonoBehaviour
             emptySlot.data = data;
             emptySlot.quantity = 1;
             UpdateUI();
+            SelectItem(0);
             CharacterManager.Instance.Player.itemData = null;
             return;
         }
@@ -71,6 +72,13 @@ public class UIInventory : MonoBehaviour
         CharacterManager.Instance.Player.itemData = null;
     }
 
+    public void SelectItem(int index)
+    {
+        if (slots[index] == null) return;
+
+        selectedItem = slots[index];
+        selectedItemIndex = index;
+    }
     public void UpdateUI()
     {
         hasItem = false;
