@@ -33,4 +33,6 @@ public class Condition : MonoBehaviour
     {
         return curValue / maxValue;
     }
+
+
 }

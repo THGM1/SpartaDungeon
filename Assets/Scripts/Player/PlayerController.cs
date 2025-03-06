@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -23,7 +24,7 @@ public class PlayerController : MonoBehaviour
 
     private Vector2 mouseDelta;
     private Rigidbody rb;
-
+    public Action inventory;
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
@@ -110,5 +111,21 @@ public class PlayerController : MonoBehaviour
         cameraContainer.localEulerAngles = new Vector3(-camCurXRot ,0 , 0);
 
         transform.eulerAngles += new Vector3(0, mouseDelta.x * lookSensitivity, 0);
+    }
+
+    public void OnInventory(InputAction.CallbackContext context)
+    {
+        if(context.phase == InputActionPhase.Started)
+        {
+            inventory?.Invoke();
+        }
+    }
+
+   public void OnThrow(InputAction.CallbackContext context)
+    {
+        if(context.phase == InputActionPhase.Started)
+        {
+            CharacterManager.Instance.Player.inventory.OnDrop();
+        }
     }
 }

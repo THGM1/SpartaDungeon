@@ -70,4 +70,8 @@ public class PlayerCondition : MonoBehaviour, IDamagable
         health.Subtract(damage);
         onTakeDamage?.Invoke();
     }
+    public void Eat(float amount)
+    {
+        health.Add(amount);
+    }
 }
