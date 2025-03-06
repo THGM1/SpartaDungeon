@@ -33,6 +33,7 @@ public class ItemSlot : MonoBehaviour
     {
         icon.gameObject.SetActive(true);
         icon.sprite = data.icon;
+        selected = true;
         quantityText.text = quantity > 1 ? quantity.ToString() : string.Empty;
 
         if(outline != null)
@@ -46,6 +47,12 @@ public class ItemSlot : MonoBehaviour
         data = null;
         icon.gameObject.SetActive(false);
         quantityText.text = string.Empty;
+    }
+
+    public void Select(bool ree)
+    {
+        selected = ree;
+        if (outline != null) outline.enabled = selected;
     }
 
 

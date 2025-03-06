@@ -1,4 +1,4 @@
-using DG.Tweening;
+ï»¿using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -76,11 +76,19 @@ public class UIInventory : MonoBehaviour
 
     public void SelectItem(int index)
     {
-        if (slots[index] == null) return;
+    
 
+        for (int i = 0; i < slots.Length; i++)
+        {
+            if (selectedItem != null && i != index)
+            {
+                slots[i].Select(false); 
+            }
+        }
         selectedItem = slots[index];
+        selectedItem.Select(true);
         selectedItemIndex = index;
-        Debug.Log($"¾ÆÀÌÅÛ {index}¹ø ¼±ÅÃµÊ: {slots[index].data.displayName}");
+        Debug.Log($"ì•„ì´í…œ {index}ë²ˆ ì„ íƒë¨: {slots[index].data.displayName}");
     }
     public void UpdateUI()
     {
