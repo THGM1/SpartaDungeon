@@ -12,6 +12,7 @@ public class PlayerController : MonoBehaviour
     public float jumpForce;
     private Vector2 curMove;
     public bool isRunning = false;
+    public LayerMask ground;
 
     [Header("카메라")]
     public Transform cameraContainer;
@@ -40,7 +41,7 @@ public class PlayerController : MonoBehaviour
 
     public void OnJump(InputAction.CallbackContext context)
     {
-        if (context.phase == InputActionPhase.Started) // 눌렀을 때
+        if (context.phase == InputActionPhase.Started && IsGrounded()) // 눌렀을 때
         {
             rb.AddForce(Vector2.up * jumpForce, ForceMode.Impulse);
         }
@@ -69,5 +70,22 @@ public class PlayerController : MonoBehaviour
         dir.y = rb.velocity.y;
 
         rb.velocity = dir;
+    }
+
+    public bool IsGrounded()
+    {
+        Ray[] rays = new Ray[4]
+        {
+            new Ray(transform.position + (transform.forward * .2f) + (transform.up * .01f), Vector3.down),
+            new Ray(transform.position + (-transform.forward * .2f) + (transform.up * .01f), Vector3.down),
+            new Ray(transform.position + (transform.right * .2f) + (transform.up * .01f), Vector3.down),
+            new Ray(transform.position + (-transform.right * .2f) + (transform.up * .01f), Vector3.down)
+        };
+
+        for (int i = 0; i < rays.Length; i++)
+        {
+            if (Physics.Raycast(rays[i], 0.1f, ground)) return true;
+        }
+        return false;
     }
 }
