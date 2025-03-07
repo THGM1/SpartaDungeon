@@ -72,6 +72,17 @@ public class PlayerCondition : MonoBehaviour, IDamagable
     }
     public void Eat(float amount)
     {
-        health.Add(amount);
+        StartCoroutine(HealthCoroutine(10f, amount));
+    }
+    IEnumerator HealthCoroutine(float duration, float amount)
+    {
+        float elapsed = 0f;
+        while (elapsed < duration)
+        {
+            health.Add(amount);
+            yield return new WaitForSeconds(1f);
+            elapsed += Time.deltaTime;
+        }
+        yield return null;
     }
 }

@@ -126,7 +126,7 @@ public class UIInventory : MonoBehaviour
 
     public void OnUseItem(InputAction.CallbackContext context)
     {
-        if (context.phase == InputActionPhase.Started)
+        if (context.phase == InputActionPhase.Started && hasItem)
         {
             for (int i = 0; i < selectedItem.data.consumables.Length; i++)
             {
