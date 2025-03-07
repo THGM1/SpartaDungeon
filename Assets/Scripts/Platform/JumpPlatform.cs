@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Platform : MonoBehaviour
+public class JumpPlatform : MonoBehaviour
 {
     Rigidbody rb;
     public float jumpForce;
