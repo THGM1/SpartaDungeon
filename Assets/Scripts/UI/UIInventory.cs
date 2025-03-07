@@ -76,8 +76,6 @@ public class UIInventory : MonoBehaviour
 
     public void SelectItem(int index)
     {
-    
-
         for (int i = 0; i < slots.Length; i++)
         {
             if (selectedItem != null && i != index)
@@ -88,7 +86,6 @@ public class UIInventory : MonoBehaviour
         selectedItem = slots[index];
         selectedItem.Select(true);
         selectedItemIndex = index;
-        Debug.Log($"아이템 {index}번 선택됨: {slots[index].data.displayName}");
     }
     public void UpdateUI()
     {
@@ -127,19 +124,22 @@ public class UIInventory : MonoBehaviour
         return null;
     }
 
-    public void OnUseItem()
+    public void OnUseItem(InputAction.CallbackContext context)
     {
-        for(int i = 0;i < selectedItem.data.consumables.Length; i++)
+        if (context.phase == InputActionPhase.Started)
         {
-            switch (selectedItem.data.consumables[i].type) 
+            for (int i = 0; i < selectedItem.data.consumables.Length; i++)
             {
-                case ConsumableType.Health:
-                    condition.Eat(selectedItem.data.consumables[i].value); break;
-                
-            }
+                switch (selectedItem.data.consumables[i].type)
+                {
+                    case ConsumableType.Health:
+                        condition.Eat(selectedItem.data.consumables[i].value); break;
 
+                }
+
+            }
+            RemoveSelectedItem();
         }
-        RemoveSelectedItem();
     }
 
     public void OnDrop()
