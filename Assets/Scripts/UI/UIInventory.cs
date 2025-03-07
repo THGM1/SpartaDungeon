@@ -11,7 +11,7 @@ public class UIInventory : MonoBehaviour
     public GameObject inventoryWindow;
     public Transform slotPanel;
     public Transform dropPosition;
-
+    private bool isMove;
     [Header("Selected Item")]
     private ItemSlot selectedItem;
     private int selectedItemIndex;
@@ -29,14 +29,14 @@ public class UIInventory : MonoBehaviour
 
         inventoryWindow.SetActive(false);
         slots = new ItemSlot[slotPanel.childCount];
-        for(int i =0; i < slots.Length; i++)
+        for (int i = 0; i < slots.Length; i++)
         {
             slots[i] = slotPanel.GetChild(i).GetComponent<ItemSlot>();
             slots[i].index = i;
             slots[i].inventory = this;
             slots[i].Clear();
         }
-       
+
     }
     public void ThrowItem(ItemData item)
     {
@@ -80,7 +80,7 @@ public class UIInventory : MonoBehaviour
         {
             if (selectedItem != null && i != index)
             {
-                slots[i].Select(false); 
+                slots[i].Select(false);
             }
         }
         selectedItem = slots[index];
@@ -103,7 +103,7 @@ public class UIInventory : MonoBehaviour
 
             }
         }
-        inventoryWindow.SetActive(hasItem);
+        OnMenu();
     }
 
     ItemSlot GetItemStack(ItemData data)
@@ -117,7 +117,7 @@ public class UIInventory : MonoBehaviour
 
     ItemSlot GetEmptySlot()
     {
-        for(int i = 0; i < slots.Length; i++)
+        for (int i = 0; i < slots.Length; i++)
         {
             if (slots[i].data == null) return slots[i];
         }
@@ -164,7 +164,7 @@ public class UIInventory : MonoBehaviour
         selectedItemIndex += direction;
 
         if (selectedItemIndex >= slots.Length) selectedItemIndex = 0;
-        if (selectedItemIndex < 0) selectedItemIndex = slots.Length -1;
+        if (selectedItemIndex < 0) selectedItemIndex = slots.Length - 1;
 
         SelectItem(selectedItemIndex);
     }
@@ -195,4 +195,30 @@ public class UIInventory : MonoBehaviour
         return false;
     }
 
+    public void OnMenu()
+    {
+        if (!isMove)
+        {
+            isMove = true;
+            if (hasItem)
+            {
+                if (!inventoryWindow.activeSelf)
+                {
+                    inventoryWindow.SetActive(true);
+                    inventoryWindow.transform.DOLocalMoveY(inventoryWindow.transform.localPosition.y + 185f, 0.5f).SetEase(Ease.OutCubic).OnComplete(() =>
+                    {
+                        isMove = false;
+                    });
+                }
+            }
+            else
+            {
+                inventoryWindow.transform.DOLocalMoveY(inventoryWindow.transform.localPosition.y - 185f, 0.05f).SetEase(Ease.OutCubic).OnComplete(() =>
+                {
+                    inventoryWindow.SetActive(false);
+                    isMove = false;
+                });
+            }
+        }
+    }
 }
