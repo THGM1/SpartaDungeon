@@ -14,6 +14,7 @@ public class PlayerController : MonoBehaviour
     private Vector2 curMove;
     public bool isRunning = false;
     public LayerMask ground;
+    public bool canMove = true;
 
     [Header("카메라")]
     public Transform cameraContainer;
@@ -34,7 +35,10 @@ public class PlayerController : MonoBehaviour
     }
     private void FixedUpdate()
     {
-        Move();
+        if (canMove)
+        {
+            Move();
+        }
     }
     private void LateUpdate()
     {

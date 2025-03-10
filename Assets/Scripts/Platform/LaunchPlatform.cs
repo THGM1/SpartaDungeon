@@ -11,6 +11,7 @@ public class LaunchPlatform : MonoBehaviour
     private bool isWait = false;
     public Transform firePsosition;
     Rigidbody rb;
+
     private void OnTriggerEnter(Collider other)
     {
         rb = other.GetComponent<Rigidbody>();
@@ -22,7 +23,7 @@ public class LaunchPlatform : MonoBehaviour
         isWait = true;
         player.position = transform.position;
     
-        Quaternion targetRotation = Quaternion.Euler(0, 0, angle);
+        Quaternion targetRotation = Quaternion.Euler(angle, 0, 0);
 
 
         float elapsedTime = 0f;
@@ -34,17 +35,18 @@ public class LaunchPlatform : MonoBehaviour
             yield return null;
 
         }
-
-        Vector3 launchDirection = transform.up;
+        CharacterManager.Instance.Player.controller.canMove = false;
         rb.velocity = Vector3.zero;
-        rb.AddForce(launchDirection * launchPower, ForceMode.Impulse);
+        rb.AddForce(transform.up * launchPower, ForceMode.Impulse);
 
         yield return new WaitForSeconds(delay);
         transform.rotation = Quaternion.identity;
         player.transform.rotation = Quaternion.identity;
-
-        Debug.Log(rb.velocity);
         isWait = false;
+
+        yield return new WaitForSeconds(delay+3f);
+        CharacterManager.Instance.Player.controller.canMove = true;
+        
     }
 
     IEnumerator test(Rigidbody rb)

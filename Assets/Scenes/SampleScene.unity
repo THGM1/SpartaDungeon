@@ -1609,7 +1609,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   detectRange: 10
   damage: 1
-  rotationSpeed: 10
   layer:
     serializedVersion: 2
     m_Bits: 128
@@ -2041,6 +2040,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1568014467}
   - component: {fileID: 1568014468}
+  - component: {fileID: 1568014469}
   m_Layer: 0
   m_Name: Platform_Launcher
   m_TagString: Untagged
@@ -2057,7 +2057,7 @@ Transform:
   m_GameObject: {fileID: 1568014464}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 6.44, y: -0.79, z: -13.27}
+  m_LocalPosition: {x: 6.44, y: -0.4, z: -13.27}
   m_LocalScale: {x: 3, y: 3, z: 3}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -2079,8 +2079,29 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   launchPower: 20
   angle: 45
-  delay: 0.5
+  delay: 1
   firePsosition: {fileID: 1969937108}
+--- !u!65 &1568014469
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1568014464}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.60822296, y: 0.7659938, z: 0.61569065}
+  m_Center: {x: -0.019204786, y: 0.37168902, z: -0.0018465122}
 --- !u!1 &1570466925
 GameObject:
   m_ObjectHideFlags: 0
@@ -2444,6 +2465,7 @@ MonoBehaviour:
   ground:
     serializedVersion: 2
     m_Bits: 55
+  canMove: 1
   cameraContainer: {fileID: 763962090}
   minXLook: -85
   maxXLook: 85
