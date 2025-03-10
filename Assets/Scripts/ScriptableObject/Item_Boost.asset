@@ -10,16 +10,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6b2dfc7937e644e4dada557720fb4262, type: 3}
-  m_Name: Item_Wood
+  m_Name: Item_Boost
   m_EditorClassIdentifier: 
-  displayName: "\uB098\uBB34"
-  description: "\uBA39\uC9C0 \uB9C8\uC138\uC694."
-  type: 0
-  icon: {fileID: 21300000, guid: a5612e17f7779374da8564e7a11d823c, type: 3}
-  dropPrefab: {fileID: 9045463041636193537, guid: 182e958d52a33a14cb9a669300124d5e, type: 3}
+  displayName: 
+  description: "\uC774\uB3D9 \uC18D\uB3C4 \uC99D\uAC00"
+  type: 1
+  icon: {fileID: 0}
+  dropPrefab: {fileID: 0}
   canStack: 0
   maxStackAmount: 0
-  consumables:
-  - type: 1
-    value: -10
-  activeType: 0
+  consumables: []
+  active:
+    type: 1
+    value: 10
+    duration: 5

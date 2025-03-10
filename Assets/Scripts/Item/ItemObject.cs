@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -11,7 +11,7 @@ public interface IInteractable
 public class ItemObject : MonoBehaviour, IInteractable
 {
     public ItemData data;
-
+    private Coroutine coroutine;
 
     public string GetInteractPrompt()
     {
@@ -22,7 +22,17 @@ public class ItemObject : MonoBehaviour, IInteractable
     public void OnInteract()
     {
         CharacterManager.Instance.Player.itemData = data;
-        CharacterManager.Instance.Player.addItem?.Invoke();
+        if (CharacterManager.Instance.Player.itemData.type == ItemType.Consumbale)
+        {
+            CharacterManager.Instance.Player.addItem?.Invoke();
+        }
+        else if(CharacterManager.Instance.Player.itemData.type == ItemType.Active)
+        {
+            CharacterManager.Instance.Player.controller.ActivateItem(CharacterManager.Instance.Player.itemData);
+        }
         Destroy(gameObject);
     }
+
+
+
 }

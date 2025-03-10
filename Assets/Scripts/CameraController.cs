@@ -24,14 +24,12 @@ public class CameraController : MonoBehaviour
             isThirdPerson = !isThirdPerson;
             StopAllCoroutines();
             StartCoroutine(SwitchCamera());
-            Debug.Log("ÀüÈ¯");
         
     }
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.V))
         {
-            Debug.Log("v");
             OnSwitchCamera();
         }
     }

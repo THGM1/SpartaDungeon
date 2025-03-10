@@ -137,4 +137,35 @@ public class PlayerController : MonoBehaviour
             CharacterManager.Instance.Player.inventory.OnDrop();
         }
     }
+    public void ActivateItem(ItemData data)
+    {
+        StartCoroutine(ApplyItem(data));
+    }
+
+    IEnumerator ApplyItem(ItemData item)
+    {
+        switch (item.active.type)
+        {
+            case ActiveType.Speed:
+                moveSpeed += item.active.value;
+                break;
+            case ActiveType.Invincible:
+                CharacterManager.Instance.Player.condition.invincible = true;
+                break;
+        }
+
+        yield return new WaitForSeconds(item.active.duration);
+
+        switch (item.active.type)
+        {
+            case ActiveType.Speed:
+                moveSpeed -= item.active.value;
+                break;
+            case ActiveType.Invincible:
+                Debug.Log("해제");
+                CharacterManager.Instance.Player.condition.invincible = false;
+                break;
+        }
+        yield return null;
+    }
 }

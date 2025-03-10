@@ -17,7 +17,7 @@ public class PlayerCondition : MonoBehaviour, IDamagable
 
     public event Action onTakeDamage;
     public float decayStamina;
-
+    public bool invincible = false;
     [Header("낙하")]
     private bool isFalling;
     private float fallTime = 0f;
@@ -67,8 +67,11 @@ public class PlayerCondition : MonoBehaviour, IDamagable
 
     public void TakeDamage(float damage)
     {
-        health.Subtract(damage);
-        onTakeDamage?.Invoke();
+        if (!invincible)
+        {
+            health.Subtract(damage);
+            onTakeDamage?.Invoke();
+        }
     }
     public void Eat(float amount)
     {
