@@ -1,13 +1,12 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem.HID;
 
 public class LaserTrap : MonoBehaviour
 {
-    public float detectRange = 300f; // ·¹ÀÌÄ³½ºÆ® ¹üÀ§
+    public float detectRange = 300f; // ë ˆì´ìºìŠ¤íŠ¸ ë²”ìœ„
     public float damage = 10f;
-    public float rotationSpeed = 10f; // È¸Àü ¼Óµµ
     private LineRenderer lineRenderer;
     public LayerMask layer;
     public Transform startPoint;
