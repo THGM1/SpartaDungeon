@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Item_Invincible
   m_EditorClassIdentifier: 
   displayName: 
-  description: "\uC774\uB3D9 \uC18D\uB3C4 \uC99D\uAC00"
+  description: "\uC77C\uC815 \uC2DC\uAC04 \uB3D9\uC548 \uBB34\uC801"
   type: 1
   icon: {fileID: 0}
   dropPrefab: {fileID: 0}
@@ -21,6 +21,6 @@ MonoBehaviour:
   maxStackAmount: 0
   consumables: []
   active:
-    type: 1
-    value: 10
-    duration: 5
+    type: 2
+    value: 0
+    duration: 3
