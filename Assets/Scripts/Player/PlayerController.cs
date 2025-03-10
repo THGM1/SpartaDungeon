@@ -25,9 +25,12 @@ public class PlayerController : MonoBehaviour
     private Vector2 mouseDelta;
     private Rigidbody rb;
     public Action inventory;
+    Animator animator;
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
+        animator = GetComponentInChildren<Animator>();
+
     }
     private void FixedUpdate()
     {
@@ -47,10 +50,13 @@ public class PlayerController : MonoBehaviour
         if (context.phase == InputActionPhase.Performed) // 누르고 있을 때
         {
             curMove = context.ReadValue<Vector2>(); //이동
+            animator.SetBool("Walk", true);
+
         }
         else if (context.phase == InputActionPhase.Canceled) // 뗐을 때
         {
             curMove = Vector2.zero; //멈춤
+            animator.SetBool("Walk", false);
         }
     }
 
@@ -59,6 +65,7 @@ public class PlayerController : MonoBehaviour
         if (context.phase == InputActionPhase.Started && IsGrounded()) // 눌렀을 때
         {
             rb.AddForce(Vector2.up * jumpForce, ForceMode.Impulse);
+            animator.SetTrigger("Jump");
         }
     }
      
@@ -67,10 +74,12 @@ public class PlayerController : MonoBehaviour
         if(context.phase == InputActionPhase.Performed)
         {
             isRunning = true;
+            animator.SetBool("Run", true);
         }
         else if(context.phase == InputActionPhase.Canceled)
         {
             isRunning = false;
+            animator.SetBool("Run", false);
         }
     }
     private void Move()

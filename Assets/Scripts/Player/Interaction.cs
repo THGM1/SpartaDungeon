@@ -17,9 +17,11 @@ public class Interaction : MonoBehaviour
     public TextMeshProUGUI promptTxt;
     private Camera camera;
 
+
     private void Start()
     {
         camera = Camera.main;
+
     }
 
     private void Update()
