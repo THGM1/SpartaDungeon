@@ -7,16 +7,14 @@ public class LaserTrap : MonoBehaviour
 {
     public float detectRange = 300f; // 레이캐스트 범위
     public float damage = 10f;
-    public float rotateSpeed = 4f;
     private LineRenderer lineRenderer;
     public LayerMask layer;
-    public Transform startPoint;
     private void Start()
     {
         lineRenderer = GetComponent<LineRenderer>();
         if (lineRenderer != null)
         {
-
+            lineRenderer.useWorldSpace = false;
             lineRenderer.enabled = true;
             Show();
         }
@@ -24,32 +22,24 @@ public class LaserTrap : MonoBehaviour
     private void Update()
     {
         DetectPlayer();
-        Rotate();
+        Debug.DrawRay(transform.position, transform.forward, Color.black);
     }
 
-    void Rotate()
-    {
-        transform.Rotate(Vector3.up, rotateSpeed * Time.deltaTime);
-    }
+
 
     void DetectPlayer()
     {
-        lineRenderer.SetPosition(0, startPoint.position);
+        lineRenderer.SetPosition(0, transform.position);
         Vector3 direction = transform.forward;
         RaycastHit hit;
-
-        if (Physics.Raycast(startPoint.position, direction, out hit, detectRange, layer))
+        lineRenderer.SetPosition(0, direction * detectRange);
+        if (Physics.Raycast(transform.position, direction, out hit, detectRange, layer))
         {
             CharacterManager.Instance.Player.condition.TakeDamage(damage);
-            if(lineRenderer != null)
-            {
-                lineRenderer.SetPosition(1, hit.point);
-            }
         }
-        else
-        {
-            lineRenderer.SetPosition(1, startPoint.position + transform.forward * detectRange);
-        }
+
+
+        
     }
 
     void Show()
