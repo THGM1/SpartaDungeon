@@ -41,6 +41,10 @@ public class PlayerController : MonoBehaviour
         {
             Move(); 
         }
+        if (isClimbing)
+        {
+            Climb();
+        }
     }
     private void LateUpdate()
     {
@@ -179,11 +183,18 @@ public class PlayerController : MonoBehaviour
     {
         if (isClimbing)
         {
-            if (rb.velocity.y < 0.2f)
+            canMove = false;
+            if (Input.GetKey(KeyCode.W))
             {
-                rb.AddForce(Vector3.up * .4f, ForceMode.VelocityChange);
+                rb.AddForce(Vector3.up * 1f, ForceMode.VelocityChange);
                 CharacterManager.Instance.Player.condition.UseStamina();
             }
+            else
+            {
+                rb.AddForce(Vector3.down * .4f, ForceMode.VelocityChange);
+            }
+
+
         }
     }
 
@@ -193,7 +204,6 @@ public class PlayerController : MonoBehaviour
         {
             rb.useGravity = false;
             rb.velocity = Vector3.zero;
-            Climb();
         }
 
     }
@@ -202,6 +212,7 @@ public class PlayerController : MonoBehaviour
     {
         if (collision.gameObject.layer == 9)
         {
+            canMove = true;
             isClimbing = false;
             rb.useGravity = true;
         }

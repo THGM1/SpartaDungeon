@@ -52,6 +52,7 @@ public class Interaction : MonoBehaviour
                 curInteractable = null;
                 promptTxt.gameObject.SetActive(false);
                 CharacterManager.Instance.Player.controller.isClimbing = false;
+                CharacterManager.Instance.Player.controller.canMove = true;
             }
         }
     }
