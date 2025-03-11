@@ -7,6 +7,7 @@ public class LaserTrap : MonoBehaviour
 {
     public float detectRange = 300f; // 레이캐스트 범위
     public float damage = 10f;
+    public float rotateSpeed = 4f;
     private LineRenderer lineRenderer;
     public LayerMask layer;
     public Transform startPoint;
@@ -23,8 +24,13 @@ public class LaserTrap : MonoBehaviour
     private void Update()
     {
         DetectPlayer();
+        Rotate();
     }
 
+    void Rotate()
+    {
+        transform.Rotate(Vector3.up, rotateSpeed * Time.deltaTime);
+    }
 
     void DetectPlayer()
     {
