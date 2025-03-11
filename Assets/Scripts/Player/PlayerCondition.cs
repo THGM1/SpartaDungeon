@@ -27,7 +27,7 @@ public class PlayerCondition : MonoBehaviour, IDamagable
 
     void Update()
     {
-        if (!CharacterManager.Instance.Player.controller.isRunning)
+        if (!CharacterManager.Instance.Player.controller.isRunning || !CharacterManager.Instance.Player.controller.isClimbing)
         {
             stamina.Add(stamina.passvieValue * Time.deltaTime);
         }

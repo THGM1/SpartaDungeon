@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -15,6 +16,7 @@ public class PlayerController : MonoBehaviour
     public bool isRunning = false;
     public LayerMask ground;
     public bool canMove = true;
+    public bool isClimbing = false;
 
     [Header("카메라")]
     public Transform cameraContainer;
@@ -37,7 +39,7 @@ public class PlayerController : MonoBehaviour
     {
         if (canMove)
         {
-            Move();
+            Move(); 
         }
     }
     private void LateUpdate()
@@ -171,5 +173,37 @@ public class PlayerController : MonoBehaviour
                 break;
         }
         yield return null;
+    }
+
+    void Climb()
+    {
+        if (isClimbing)
+        {
+            if (rb.velocity.y < 0.2f)
+            {
+                rb.AddForce(Vector3.up * .4f, ForceMode.VelocityChange);
+                CharacterManager.Instance.Player.condition.UseStamina();
+            }
+        }
+    }
+
+    private void OnCollisionStay(Collision collision)
+    {
+        if (collision.gameObject.layer == 9)
+        {
+            rb.useGravity = false;
+            rb.velocity = Vector3.zero;
+            Climb();
+        }
+
+    }
+
+    private void OnCollisionExit(Collision collision)
+    {
+        if (collision.gameObject.layer == 9)
+        {
+            isClimbing = false;
+            rb.useGravity = true;
+        }
     }
 }

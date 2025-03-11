@@ -42,11 +42,16 @@ public class Interaction : MonoBehaviour
                     SetPromptText();
                 }
             }
+            else if(Physics.Raycast(ray, out hit, 1f, 1 << 9))
+            {
+                CharacterManager.Instance.Player.controller.isClimbing = true;
+            }
             else
             {
                 curInteractGO = null;
                 curInteractable = null;
                 promptTxt.gameObject.SetActive(false);
+                CharacterManager.Instance.Player.controller.isClimbing = false;
             }
         }
     }
